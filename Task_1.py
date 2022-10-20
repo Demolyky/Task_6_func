@@ -19,6 +19,7 @@ def search_name_people(number_of_document):
             return people["name"]
     return "Нет такого пользователя"
 
+
 # s – shelf – команда, которая спросит номер документа и выведет номер полки, на которой он находится;
 # Правильно обработайте ситуации, когда пользователь будет вводить несуществующий документ.
 def search_number_of_folder(number_of_document):
@@ -79,8 +80,9 @@ def delete_from_documents(number_of_document):
     print(f"Пользователь с номером {number_of_document} удален из списка документов")
 
 
+# delete номера документа из полки
 def delete_from_directories(number_of_document):
-    print(f"-----------УДАЛЕНИЕ С ПОЛКИ------------")
+    print(f"-----------УДАЛЕНИЕ ИЗ ПОЛКИ------------")
     for numbers in directories.values():
         if number_of_document in numbers:
             numbers.remove(number_of_document)
