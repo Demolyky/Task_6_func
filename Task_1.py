@@ -60,8 +60,11 @@ def add_to_directories(number_of_document, number_of_dict):
         print(f"Пользователь добавлен на полку: {number_of_dict}")
         return True
     else:
-        add_shelf(number_of_dict, number_of_document)
-        print(f"Пользователь добавлен на новую полку: {number_of_dict}")
+        if number_of_dict not in directories.keys():
+            directories.update({number_of_dict: [number_of_document]})
+            print(f"Пользователь добавлен на новую полку: {number_of_dict}")
+        else:
+            print("Полка существует")
         return False
 
 
@@ -72,12 +75,11 @@ def delete_from_documents(number_of_document):
     for doc in documents:
         if doc["number"] == number_of_document:
             documents.remove(doc)
+            print(f"Пользователь с номером {number_of_document} удален из списка документов")
             break
     else:
         print("Номера отсутствует в списке пользователей")
         return False
-
-    print(f"Пользователь с номером {number_of_document} удален из списка документов")
 
 
 # delete номера документа из полки
@@ -92,14 +94,16 @@ def delete_from_directories(number_of_document):
         print("Номер отсутствует на полках")
         return False
 
+
 # as – add shelf – команда, которая спросит номер новой полки и добавит ее в перечень.
 # Предусмотрите случай, когда пользователь добавляет полку, которая уже существует.;
-def add_shelf(number_of_shelf, number_of_document):
+def add_shelf(number_of_shelf):
     print("--------------ДОБАВЛЕНИЕ ПОЛКИ---------------")
     if number_of_shelf not in directories.keys():
-        directories.update({number_of_shelf: [number_of_document]})
+        directories.update({number_of_shelf: []})
     else:
         print("Полка существует")
+
 
 # m – move – команда, которая спросит номер документа и целевую полку и переместит его с текущей полки на целевую.
 # Корректно обработайте кейсы, когда пользователь пытается переместить несуществующий документ или переместить
@@ -114,35 +118,34 @@ def main():
     run = True
     while run:
         command = input("Введите команду на англ.: ")
-        match command.lower():
-            case "p":
-                print(search_name_people(input("Введте номер документа: ")))
-            case "s":
-                print(search_number_of_folder(input("Введте номер документа: ")))
-            case "l":
-                list_documents()
-            case "a":
-                type_doc = input("Введите тип документа: ")
-                number_of_document = input("Введите номер документа: ")
-                name = input("Введите Имя и фамилию полностью: ")
-                number_of_directories = input("Введите номер полки: ")
-                add_to_documents(type_doc, number_of_document, name)
-                add_to_directories(number_of_document, number_of_directories)
-            case "d":
-                number_of_document = input("Введите номер удаляемого документа: ")
-                delete_from_documents(number_of_document)
-                delete_from_directories(number_of_document)
-                list_documents()
-            case "m":
-                number_of_document = input("Введите номер документа для переноса: ")
-                number_of_directories = input("Введите номер новой полки: ")
-                move(number_of_document, number_of_directories)
-            case "as":
-                number_of_shelf = input("Введите номер доабвляемой полки: ")
-                add_shelf(number_of_shelf)
-            case _:
-                print("Код не найден, программа завершена")
-                run = False
+        if command.lower() == "p":
+            print(search_name_people(input("Введте номер документа: ")))
+        elif command.lower() == "s":
+            print(search_number_of_folder(input("Введте номер документа: ")))
+        elif command.lower() == "l":
+            list_documents()
+        elif command.lower() == "a":
+            type_doc = input("Введите тип документа: ")
+            number_of_document = input("Введите номер документа: ")
+            name = input("Введите Имя и фамилию полностью: ")
+            number_of_directories = input("Введите номер полки: ")
+            add_to_documents(type_doc, number_of_document, name)
+            add_to_directories(number_of_document, number_of_directories)
+        elif command.lower() == "d":
+            number_of_document = input("Введите номер удаляемого документа: ")
+            delete_from_documents(number_of_document)
+            delete_from_directories(number_of_document)
+            list_documents()
+        elif command.lower() == "m":
+            number_of_document = input("Введите номер документа для переноса: ")
+            number_of_directories = input("Введите номер новой полки: ")
+            move(number_of_document, number_of_directories)
+        elif command.lower() == "as":
+            number_of_shelf = input("Введите номер доабвляемой полки: ")
+            add_shelf(number_of_shelf)
+        else:
+            print("Код не найден, программа завершена")
+            run = False
 
 
 main()
