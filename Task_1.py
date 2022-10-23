@@ -119,9 +119,9 @@ def main():
     while run:
         command = input("Введите команду на англ.: ")
         if command.lower() == "p":
-            print(search_name_people(input("Введте номер документа: ")))
+            print(search_name_people(input("Введите номер документа: ")))
         elif command.lower() == "s":
-            print(search_number_of_folder(input("Введте номер документа: ")))
+            print(search_number_of_folder(input("Введите номер документа: ")))
         elif command.lower() == "l":
             list_documents()
         elif command.lower() == "a":
